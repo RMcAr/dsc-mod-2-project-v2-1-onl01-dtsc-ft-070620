@@ -30,12 +30,79 @@ Data is collected from Kings County, Washington, from 2014 to 2015. We are provi
 - Square Footage of 15 nearest homes
 - Square Footage of 15 nearest lots
 
+
+
 ## Model Construction Methods
+We utilized OLS regression to construct a multilinear regression model. In order to construct a reliable model that was not impacted highly by multicollinearity or other data issues, we first completed:
+- Data Cleaning
+- Categorical Classification of Columns
+- Multicollinearity Checks
 ### Model 1: Raw Modeling
+In order to gain a high level overview of our data, we first completed a baseline model whose data was manipulated as little as possible. This model was unrefined, yet we still acheived an R^2 score of 0.83, as well as low P-Values across our predictors. However, a QQ plot from this model yeilded many issues. Our residuals were not normal at all, and our visualization suggested that this was due the presence of many outliers in our data. 
+
+![Raw_model](./images/Raw_Model_Measures.png)
+> This is a raw model used as a basis point from which our refined models will branch from. 
+
+#### Results
+- We learned that our data contained many outliers due to our non-linear residuals. 
+- Our cleaning, multicollinearity checking, and categorical classification was relatively successful due to low P-values across our predictors. 
+- Further data cleaning and transformation is required to construct a more accurate model. 
+
 ### Model 2: Refined Modeling
+We furhter refined our data to meet assumptions necessary to complete linear modeling. This section consisted of further data handling through outlier removal, and data transformation. We utilized both Z-Score and IQR outlier removal methods, and continued with Z-Score cleaning after concluding that this method conserved a greater amount of data and yeilded a higher R^2 value than the IQR removal method. 
+
+![Z_Model_Measures](./images/Z_Model_Measures.png)
+> This visualization shows the results for data cleaned using Z-Score Outlier Removal methods
+
+![IQR_Model_Measures](./images/IQR_Model_Measures.png)
+> This model used data cleaned through IQR Outlier Removal methods
+
+We also transformed out columns through both a logarithmic and Box-Cox transformation. Based on distribution curves we decided to continue with Box-Cox tranformed data, as this method transformed out data into the most normal distribution we could acheive. 
+
+![Transformed_Model_Measures](./images/Transformed_Model_Measures.png)
+> This is our final model, with an appropriately accurate R^2 value of 0.87
+
+After these further refinements, our model was improved at the cost of interpretability. Our R^2 value was improved from 0.83 to 0.87, while our P-Values remained in acceptable ranges. A testing validation process was done as well, confirming the viability of our model to predict home prices.
+
+#### Results
+- Our data had outliers removed using the Z-Score method becuase less rows were omitted, while maintining a higher R^2 value than using the IQR outlier removal method. 
+- Logarithmic transformations were insufficient to fully normalize our data, so we also used a Box-Cox transformation through scipy.stats.boxcox, documentation on this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox.html)
+
+
 ### Model 3: Consumer Modeling
+Our final consideration was to create a model that could be used by prospective home sellers. We wanted to create a model that would provide our audience with a clear answer while using data that they had available. In doing so, we constructed a function that would accept missing data, and provide a model summary as well as a price prediction for our sellers' homes. 
+
+## Model Conclusions
+Our goal in this investigation was twofold; we had to construct a model that could predict prices as accurately as possible, without regard to interpretability, as well as construct a model that would possibly be used by our audience of prospective home sellers. These two goals would be completed with different models that we have constructed. Our audience demanding a high R^2 value would prefer our refined model, which has been transformed and manipulated, while prospective home sellers would prefer our consumer model for its interpretability and ease of use. 
 ### Additional Investigations
+Model construction does not give a full picture of how our data is interacting. There are an infinite number of inputs to home prices that could be missed when constructing models. We have provided high-level looks at some predictors that would not have been as fleshed out in our formal model investigations. 
 #### Consumer Irrationality
+Models are built with an underlying assumption of rational behavior, but in large markets this is rarely the case. Indeed, there are many different ways in which irrationality penetrates the housing market, but one of the most easily communicated way is the anchoring effect. 'Anchoring' is a behavioral economics term that explains how a first impression may overwhelm decision making. For our housing example, a prospective home seller may be 'anchored' to the value of their home when they bought it, undervaluing the rise in value of their property, and therefore having an irrational view of their own home's price. To give a high-level investigation of how our data displays the phenomenon of Anchoring, we will use relative square footages of homes. If the square footage of a home increases relative to it's neighbors, the price should also increase.
+Furthermore, homes that are higher in square footage than their neighbors should consistently be priced higher than the home of the same square footage, but lower than neighbors' square footage. 
+![Relative_sqft_graph](./images/Relative_Sqft.png)
+> This graph shows the relationship between price and the ratio between a home's square footage and the average square footage of the nearest 15 neighbors. 
+
+![Lower_sqft_v_higher_sqft](./images/Lower_v_Higher.png)
+>This graph shows how price varies as square footage increases for two groups: Homes that are lower in square footage than their neighbors, and homes that are higher in square footage than their neighbors. 
+
 #### Housing Density
+Another aspect of the housing market that our model did not take into account was home density. How private or public a home is will have a clearly measurable effect on price, yet our model did not reflect this aspect of the housing market. We instead visualized the relationship between price and number of homes within a given Zipcode
+
+![Home_Density_graph](./images/Home_Density.png)
+>This graph shows the relationship between the number of homes in a given area and the mean price of the homes in this area. 
+
 #### Renovations
-### Conclusions and Recommendations
+We wanted to provide our prospective homeseller with a clearly actionable suggestion, and the most logical suggestion we could make to our prospective sellers is whether or not they should renovate their property. We visualized the relationship between price and the number of years since the most recent construction. 
+
+![Renovations_graph](./images/Renovations.png)
+>This graph shows how a property's price changes as the time since any type of construction passes. 
+
+## Project Conclusions and Recommendations
+
+The housing market is one of the most difficult markets to predict, even on as small of a scale of Kings County. For our prospective homesellers, it was important to not only give an accurate model that they could use to predict their homes price, but also give them some context on the housing market through our additional explorations within our data. Through all of this, we would recommend that these prospective homesellers:
+- Consider neighbors and their relative sizes compared to your home. If you live in a home that is less than 3000 sqft, it is beneficial to be the smallest house! Conversely, if yoru home is larger than 3000, you would benefit from having a relatively larger house. 
+- A renovation would add considerable value to a home, especially if this home had not been worked on for 55 to 60 years. If a home had a renovation in the past 55 to 60 years, the gain on price would not be as large. Furthermore, if the home continued to have no work done, it may gain an 'antique' status, increasing the price as time goes on. 
+- 
+
+
+
