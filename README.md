@@ -40,7 +40,7 @@ We utilized OLS regression to construct a multilinear regression model. In order
 ### Model 1: Raw Modeling
 In order to gain a high level overview of our data, we first completed a baseline model whose data was manipulated as little as possible. This model was unrefined, yet we still acheived an R^2 score of 0.83, as well as low P-Values across our predictors. However, a QQ plot from this model yeilded many issues. Our residuals were not normal at all, and our visualization suggested that this was due the presence of many outliers in our data. 
 
-![Raw_model](./images/Raw_Model_Measures.png)
+![Raw_model](./Images/Raw_Model_Measures.png)
 > This is a raw model used as a basis point from which our refined models will branch from. 
 
 #### Results
@@ -51,15 +51,15 @@ In order to gain a high level overview of our data, we first completed a baselin
 ### Model 2: Refined Modeling
 We furhter refined our data to meet assumptions necessary to complete linear modeling. This section consisted of further data handling through outlier removal, and data transformation. We utilized both Z-Score and IQR outlier removal methods, and continued with Z-Score cleaning after concluding that this method conserved a greater amount of data and yeilded a higher R^2 value than the IQR removal method. 
 
-![Z_Model_Measures](./images/Z_Model_Measures.png)
+![Z_Model_Measures](./Images/Z_Model_Measures.png)
 > This visualization shows the results for data cleaned using Z-Score Outlier Removal methods
 
-![IQR_Model_Measures](./images/IQR_Model_Measures.png)
+![IQR_Model_Measures](./Images/IQR_Model_Measures.png)
 > This model used data cleaned through IQR Outlier Removal methods
 
 We also transformed out columns through both a logarithmic and Box-Cox transformation. Based on distribution curves we decided to continue with Box-Cox tranformed data, as this method transformed out data into the most normal distribution we could acheive. 
 
-![Transformed_Model_Measures](./images/Transformed_Model_Measures.png)
+![Transformed_Model_Measures](./Images/Transformed_Model_Measures.png)
 > This is our final model, with an appropriately accurate R^2 value of 0.87
 
 After these further refinements, our model was improved at the cost of interpretability. Our R^2 value was improved from 0.83 to 0.87, while our P-Values remained in acceptable ranges. A testing validation process was done as well, confirming the viability of our model to predict home prices.
@@ -79,22 +79,22 @@ Model construction does not give a full picture of how our data is interacting. 
 #### Consumer Irrationality
 Models are built with an underlying assumption of rational behavior, but in large markets this is rarely the case. Indeed, there are many different ways in which irrationality penetrates the housing market, but one of the most easily communicated way is the anchoring effect. 'Anchoring' is a behavioral economics term that explains how a first impression may overwhelm decision making. For our housing example, a prospective home seller may be 'anchored' to the value of their home when they bought it, undervaluing the rise in value of their property, and therefore having an irrational view of their own home's price. To give a high-level investigation of how our data displays the phenomenon of Anchoring, we will use relative square footages of homes. If the square footage of a home increases relative to it's neighbors, the price should also increase.
 Furthermore, homes that are higher in square footage than their neighbors should consistently be priced higher than the home of the same square footage, but lower than neighbors' square footage. 
-![Relative_sqft_graph](./images/Relative_Sqft.png)
+![Relative_sqft_graph](./Images/Relative_Sqft.png)
 > This graph shows the relationship between price and the ratio between a home's square footage and the average square footage of the nearest 15 neighbors. 
 
-![Lower_sqft_v_higher_sqft](./images/Lower_v_Higher.png)
+![Lower_sqft_v_higher_sqft](./Images/Lower_v_Higher.png)
 >This graph shows how price varies as square footage increases for two groups: Homes that are lower in square footage than their neighbors, and homes that are higher in square footage than their neighbors. 
 
 #### Housing Density
 Another aspect of the housing market that our model did not take into account was home density. How private or public a home is will have a clearly measurable effect on price, yet our model did not reflect this aspect of the housing market. We instead visualized the relationship between price and number of homes within a given Zipcode
 
-![Home_Density_graph](./images/Home_Density.png)
+![Home_Density_graph](./Images/Home_Density.png)
 >This graph shows the relationship between the number of homes in a given area and the mean price of the homes in this area. 
 
 #### Renovations
 We wanted to provide our prospective homeseller with a clearly actionable suggestion, and the most logical suggestion we could make to our prospective sellers is whether or not they should renovate their property. We visualized the relationship between price and the number of years since the most recent construction. 
 
-![Renovations_graph](./images/Renovations.png)
+![Renovations_graph](./Images/Renovations.png)
 >This graph shows how a property's price changes as the time since any type of construction passes. 
 
 ## Project Conclusions and Recommendations
